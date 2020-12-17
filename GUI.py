@@ -4,16 +4,12 @@ import os
 import xml.etree.ElementTree as ET
 
 
-# keep code below at the top
 root = tk.Tk()
 root.title("Ewidencja uczniów i ocen")  # title
 filepath = ''  # var for XML file path
 
 canvas = tk.Canvas(height=300, width=400)
 canvas.pack()
-
-
-# ^^keep at the top^^
 
 
 def add_path():  # chose path to XML file
