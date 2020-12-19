@@ -10,7 +10,9 @@ root.title("Ewidencja uczniów i ocen")  # title
 filepath = r'C:\Users\Filip Szczepanski\source\repos\XML_zaliczenie2\oceny_uczniów.xml'  # var for XML file path
 classA = False
 classB = False
+
 listaUczniow = []
+lista = []
 
 
 canvas = tk.Canvas(height=400, width=400)
@@ -102,6 +104,7 @@ def parse_XML():
     tree = ET.parse(filepath)
     rootParser = tree.getroot()
 
+
     Parser.generating_lists(rootParser)
 
     listaUczniow = Parser.collecting_data()
@@ -109,6 +112,33 @@ def parse_XML():
     #for e in listaUczniow:
     #    print(e)
 
+    #tablica dwuwymiarowa dla każdego ucznia imie,naziwsko,polski.avg,matematyka.avg.....
+    #find uczen where id_ucznia = x (wczytanie z gui od 1 do 20
+    #write uczen.imie, uczen.nazwisko
+    #write uczen/przedmioty/polski/oceny .split(,) .avg()
+    #write uczen/przedmioty/polski/angielski ....
+
+    for uczen in rootParser.iter('imie'):
+        print(uczen.text)
+        lista.append()
+
+    for uczen in rootParser.iter('nazwisko'):
+        print(uczen.text)
+
+
+    # for uczen in rootParser.iter('przedmioty'):
+    #     for el in rootParser.iter('oceny'):
+    #         print(przedmioty.text)
+
+def checkboxA():
+    global classA
+    classA = not classA
+    students_checkbox2.deselect()
+
+def checkboxB():
+    global classB
+    classB = not classB
+    students_checkbox1.deselect()
 
 
 def checkboxA():
