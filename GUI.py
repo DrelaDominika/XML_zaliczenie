@@ -2,14 +2,18 @@ import tkinter as tk
 from tkinter import filedialog
 import os
 import xml.etree.ElementTree as ET
-
+import Parser
+from xml.dom import minidom
 
 root = tk.Tk()
 root.title("Ewidencja uczniów i ocen")  # title
 filepath = r'C:\Users\Filip Szczepanski\source\repos\XML_zaliczenie2\oceny_uczniów.xml'  # var for XML file path
 classA = False
 classB = False
+
+listaUczniow = []
 lista = []
+
 
 canvas = tk.Canvas(height=400, width=400)
 canvas.pack()
@@ -17,7 +21,7 @@ canvas.pack()
 
 def add_path():  # chose path to XML file
     global filepath
-    filepath = tk.filedialog.askopenfilename(initialdir='/', title='wybierz plik z danymi uczniów')
+    #filepath = tk.filedialog.askopenfilename(initialdir='/', title='wybierz plik z danymi uczniów')
     path_entry.insert(tk.END,filepath)
 
 
@@ -25,11 +29,88 @@ def open_file():
     global filepath
     os.startfile(filepath)
 
+
+def write_XML():
+    global filepath
+    global lista
+    file = r'C:\Users\Filip Szczepanski\source\repos\XML_zaliczenie2\szablon.xml'
+    tree2 = ET.parse(file)
+    rootParser = tree2.getroot()
+
+    numer = int(students_entry.get()) #pobranie numeru z aplikacji
+    imie = listaUczniow[numer][1]
+    nazwisko = listaUczniow[numer][2]
+    polski = listaUczniow[numer][3]
+    angielski = listaUczniow[numer][4]
+    matematyka = listaUczniow[numer][5]
+    fizyka = listaUczniow[numer][6]
+    geografia = listaUczniow[numer][7]
+    srednia = listaUczniow[numer][8]
+
+    uczenTag = ET.Element('uczen')  #treść XMLA
+
+    imieTag = ET.SubElement(uczenTag,'imie')
+    imieTag.text=str(imie)
+
+    nazwiskoTag = ET.SubElement(uczenTag,'nazwisko')
+    nazwiskoTag.text=str(nazwisko)
+
+    polskiTag = ET.SubElement(uczenTag,'polski')
+    polskiTag.text=str(polski)
+
+    angielskiTag = ET.SubElement(uczenTag,'angielski')
+    angielskiTag.text=str(angielski)
+
+    matematykaTag = ET.SubElement(uczenTag,'matematyka')
+    matematykaTag.text=str(matematyka)
+
+    fizykaTag = ET.SubElement(uczenTag,'fizyka')
+    fizykaTag.text=str(fizyka)
+
+    geografiaTag = ET.SubElement(uczenTag,'geografia')
+    geografiaTag.text=str(geografia)
+
+    sredniaTag = ET.SubElement(uczenTag,'srednia')
+    sredniaTag.text=str(srednia)
+
+
+    raw = ET.tostring(uczenTag, encoding='unicode')
+
+    pretty = minidom.parseString(raw).toprettyxml(indent='    ')
+
+    with open(imie+ ' '+ nazwisko, 'w') as f:
+        f.write(pretty)
+
+
+
+    #ET.SubElement(tree2[0],'imieTEST')
+    # ET.SubElement(,'nazwisko')
+    # ET.SubElement(tree2[1],'polski')
+    # ET.SubElement(tree2[1],'angielski')
+    # ET.SubElement(tree2[1],'matematyka')
+    # ET.SubElement(tree2[1],'fizyka')
+    # ET.SubElement(tree2[1],'geografia')
+    # ET.SubElement(tree2[1],'srednia')
+    #ET.dump(tree2)
+
+
+
+
+
 def parse_XML():
+    global listaUczniow
     global filepath
     global lista
     tree = ET.parse(filepath)
     rootParser = tree.getroot()
+
+
+    Parser.generating_lists(rootParser)
+
+    listaUczniow = Parser.collecting_data()
+    write_XML()
+    #for e in listaUczniow:
+    #    print(e)
 
     #tablica dwuwymiarowa dla każdego ucznia imie,naziwsko,polski.avg,matematyka.avg.....
     #find uczen where id_ucznia = x (wczytanie z gui od 1 do 20
@@ -44,9 +125,21 @@ def parse_XML():
     for uczen in rootParser.iter('nazwisko'):
         print(uczen.text)
 
+
     # for uczen in rootParser.iter('przedmioty'):
     #     for el in rootParser.iter('oceny'):
     #         print(przedmioty.text)
+
+def checkboxA():
+    global classA
+    classA = not classA
+    students_checkbox2.deselect()
+
+def checkboxB():
+    global classB
+    classB = not classB
+    students_checkbox1.deselect()
+
 
 def checkboxA():
     global classA
@@ -94,8 +187,5 @@ students_entry.grid(row=2,column=2)
 
 students_button = tk.Button(frame_students,text= 'Wyświetl dane')
 students_button.place(relx=0.7,rely=0.1,relheight=0.8,relwidth=0.28)
-
-
-
 
 root.mainloop()# keep as the last line

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>               
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:template match="Klasy">
-    <html> 
-      <head> 
+    <html>
+      <head>
         <title>Oceny uczniow </title>
      </head>
      <body text="black">
@@ -11,6 +11,7 @@
 			<h1>Oceny uczniow klasy <xsl:value-of select="@klasa"/></h1>
 			<table border="1">
 				<tr bgcolor="#CC99CC">
+          <th>ID</th>
 					<th>Uczen</th>
 					<th>Polski</th>
 					<th>Angielski</th>
@@ -19,8 +20,8 @@
 					<th>Geografia</th>
 				</tr>
 				<xsl:for-each select="uczen">
-				<xsl:sort select="nazwisko"/>
 				<tr>
+          <td><xsl:value-of select="id_ucznia"/></td>
 					<td bgcolor="#EEEEEE"><xsl:value-of select="imie"/> <xsl:text> </xsl:text> <xsl:value-of select="nazwisko"/></td>
 					<xsl:for-each select="przedmioty">
 					<td><xsl:value-of select="polski"/></td>
@@ -34,6 +35,6 @@
 				</table>
 				</xsl:for-each>
 			 </body>
-			</html> 
+			</html>
 		   </xsl:template>
-		</xsl:stylesheet> 
+		</xsl:stylesheet>
