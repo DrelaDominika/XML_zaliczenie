@@ -12,6 +12,7 @@ filepath = ''  # var for XML file path
 classA = False
 classB = False
 listaUczniow = []
+numer=0
 
 canvas = tk.Canvas(height=400, width=400)
 canvas.pack()
@@ -31,7 +32,8 @@ def open_file():
 def write_XML():
     global filepath
     global lista
-    file = r'C:\Users\Filip Szczepanski\source\repos\XML_zaliczenie2\szablon.xml'
+    global numer
+    file = r'/szablon.xml'
     tree2 = ET.parse(file)
     rootParser = tree2.getroot()
 
@@ -102,6 +104,29 @@ def parse_XML():
     #         print(przedmioty.text)
 
 
+def display_info():
+    global numer
+
+    numer = int(students_entry.get())  # pobranie numeru z aplikacji
+    imie = listaUczniow[numer][1]
+    nazwisko = listaUczniow[numer][2]
+    polski = listaUczniow[numer][3]
+    angielski = listaUczniow[numer][4]
+    matematyka = listaUczniow[numer][5]
+    fizyka = listaUczniow[numer][6]
+    geografia = listaUczniow[numer][7]
+    srednia = listaUczniow[numer][8]
+
+    info_label.config(text="Średnie ucznia o imieniu: {} {}/n"
+                           "j. polski:      {} /n"
+                           "j. angielski:   {} /n"
+                           "matematyka:     {} /n"
+                           "fizyka:         {} /n"
+                           "geografia:      {} /n"
+                           "srednia ogólna: {}"
+                           )
+
+
 def checkboxA():
     global classA
     classA = not classA
@@ -142,7 +167,7 @@ students_label.grid(row=1, column=2)
 students_entry = tk.Entry(frame_students)
 students_entry.grid(row=2, column=2)
 
-students_button = tk.Button(frame_students, text='Wyświetl dane')
+students_button = tk.Button(frame_students, text='Wyświetl dane',command =display_info)
 students_button.place(relx=0.7, rely=0.03, relheight=0.45, relwidth=0.28)
 
 students_button2 = tk.Button(frame_students, text='Eksportuj dane', command=write_XML)
