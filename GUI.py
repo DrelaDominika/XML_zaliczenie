@@ -107,6 +107,7 @@ def parse_XML():
 def display_info():
     global numer
 
+
     numer = int(students_entry.get())  # pobranie numeru z aplikacji
     imie = listaUczniow[numer][1]
     nazwisko = listaUczniow[numer][2]
@@ -124,7 +125,7 @@ def display_info():
                            "fizyka:         {} /n"
                            "geografia:      {} /n"
                            "srednia ogólna: {}"
-                           )
+                           ).format(imie,nazwisko,polski,angielski,matematyka,fizyka,geografia,srednia)
 
 
 def checkboxA():
