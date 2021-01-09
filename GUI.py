@@ -106,7 +106,7 @@ def display_info():
     geografia = listaUczniow[numer][7]
     srednia = listaUczniow[numer][8]
 
-    if ((numer in range(0,9 ) and classA) or (numer in range(10, 19) and classB)):
+    if ((numer in range(0,10 ) and classA) or (numer in range(10, 20) and classB)):
         info_label.config(text=f"Średnie ucznia o imieniu: {str(imie)} {str(nazwisko)} \n"  # displaying info in label
                                f"j. polski:      {str(polski)} \n"
                                f"j. angielski:   {str(angielski)} \n"
