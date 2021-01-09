@@ -96,7 +96,7 @@ def display_info():
 
     listaUczniow = Parser.collecting_data()
 
-    numer = int(students_entry.get())  # pobranie numeru z aplikacji
+    numer =int(students_entry.get())-1  # pobranie numeru z aplikacji
     imie = listaUczniow[numer][1]
     nazwisko = listaUczniow[numer][2]
     polski = listaUczniow[numer][3]
@@ -106,7 +106,7 @@ def display_info():
     geografia = listaUczniow[numer][7]
     srednia = listaUczniow[numer][8]
 
-    if ((numer in range(1, 10) and classA) or (numer in range(11, 20) and classB)):
+    if ((numer in range(0,9 ) and classA) or (numer in range(10, 19) and classB)):
         info_label.config(text=f"Średnie ucznia o imieniu: {str(imie)} {str(nazwisko)} \n"  # displaying info in label
                                f"j. polski:      {str(polski)} \n"
                                f"j. angielski:   {str(angielski)} \n"
