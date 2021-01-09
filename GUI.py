@@ -35,8 +35,8 @@ def write_XML():
     global numer
     global classA
     global classB
-
-    numer = int(students_entry.get())  # pobranie numeru z aplikacji
+    error_label.configure(text='')
+    numer = int(students_entry.get()) -1  # pobranie numeru z aplikacji
     imie = listaUczniow[numer][1]
     nazwisko = listaUczniow[numer][2]
     polski = listaUczniow[numer][3]
@@ -72,7 +72,7 @@ def write_XML():
     sredniaTag = ET.SubElement(uczenTag, 'srednia')
     sredniaTag.text = str(srednia)
 
-    if ((numer in range(1, 10) and classA) or (numer in range(11, 20) and classB)):
+    if ((numer in range(0, 9) and classA) or (numer in range(10, 19) and classB)):
         raw = ET.tostring(uczenTag, encoding='unicode')  # zapisywanie xmla do pliku
         pretty = minidom.parseString(raw).toprettyxml(indent='    ')
         with open(imie + ' ' + nazwisko, 'w') as f:
@@ -88,7 +88,7 @@ def display_info():
     global listaUczniow
     global classA
     global classB
-
+    error_label.configure(text='')
     tree = ET.parse(filepath)
     rootParser = tree.getroot()
 
@@ -125,6 +125,7 @@ def checkboxA():
     classA = True
     classB = False
     students_checkbox2.deselect()
+    error_label.configure(text='')
 
 
 def checkboxB():
@@ -133,6 +134,7 @@ def checkboxB():
     classB = True
     classA = False
     students_checkbox1.deselect()
+    error_label.configure(text='')
 
 
 frame_path = tk.Frame(root, borderwidth=2, relief='ridge')  # frame for path section
